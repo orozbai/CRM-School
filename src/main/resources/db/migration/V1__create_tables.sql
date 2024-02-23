@@ -2,7 +2,7 @@ create table subjects
 (
     id      serial primary key,
     subject varchar(100)
-)
+);
 
 create table instructors
 (
@@ -31,9 +31,28 @@ create table students
 
 create table grades
 (
+    id         serial primary key,
+    student_id int references students (id),
+    subject_id int references subjects (id),
+    grade      int,
+    date_given date
+);
+
+create table exercises
+(
     id          serial primary key,
-    student_id  int references students (id),
-    subject_id  int references subjects (id),
+    description varchar(1000),
+    date_given  date,
+    deadline    date,
+    subject_id  int references subjects (id)
+);
+
+create table homeworks
+(
+    id          serial primary key,
+    description varchar(1000),
+    date_given  date,
     grade       int,
-    date_given  date
+    exercise_id int references exercises (id),
+    student_id  int references students (id)
 );
